@@ -2,21 +2,26 @@ services:
   web:
     build:
       context: ./django-app/
-    command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django-app/:/usr/scr/app/
-    ports:
-      - 8000:8000
+      - static_files:/usr/src/app/staticfiles
+    expose:
+      - 8000
+    # ports:
+    #   - 8000:8000
     env_file:
       - ./.env/dev.env
-  # nginx:
-  #   build:
-  #     context: ./nginx/
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - ./nginx/html/:/usr/share/nginx/html/
-  #     - ./nginx/conf.d/:/etc/nginx/conf.d/
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - static_files:/home/app/staticfiles
+
   # dns:
   #   build:
   #     context: ./dns/
@@ -28,3 +33,6 @@ services:
   #     - ./dns/named.conf:/etc/bind/named.conf
   #     - ./dns/zone/:/etc/bind/zone/
   #   command: named -c /etc/bind/named.conf -g -u named
+
+volumes:
+  static_files:
