@@ -1,20 +1,30 @@
 services:
-  nginx:
+  web:
     build:
-      context: ./nginx/
-    ports:
-      - 80:80
+      context: ./django-app/
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./nginx/html/:/usr/share/nginx/html/
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-  dns:
-    build:
-      context: ./dns/
-    restart: always
+      - ./django-app/:/usr/scr/app/
     ports:
-      - 53:53
-      - 53:53/udp
-    volumes:
-      - ./dns/named.conf:/etc/bind/named.conf
-      - ./dns/zone/:/etc/bind/zone/
-    command: named -c /etc/bind/named.conf -g -u named
+      - 8000:8000
+    env_file:
+      - ./.env/dev.env
+  # nginx:
+  #   build:
+  #     context: ./nginx/
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - ./nginx/html/:/usr/share/nginx/html/
+  #     - ./nginx/conf.d/:/etc/nginx/conf.d/
+  # dns:
+  #   build:
+  #     context: ./dns/
+  #   restart: always
+  #   ports:
+  #     - 53:53
+  #     - 53:53/udp
+  #   volumes:
+  #     - ./dns/named.conf:/etc/bind/named.conf
+  #     - ./dns/zone/:/etc/bind/zone/
+  #   command: named -c /etc/bind/named.conf -g -u named
