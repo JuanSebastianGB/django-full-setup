@@ -3,7 +3,7 @@ services:
     build:
       context: ./django-app/
     # command: python manage.py runserver 0.0.0.0:8000
-    command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
+    # command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django-app/:/usr/scr/app/
       - static_files:/usr/src/app/staticfiles
