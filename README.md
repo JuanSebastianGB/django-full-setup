@@ -16,6 +16,14 @@ nginx -s reload
 # test dns resolution
 nslookup ns.main.com
 
+# Run development
+
+docker-compose -f docker-compose.yml up --build
+
+# Run production
+
+docker-compose -f docker-compose.prod.yml up --build
+
 ```
 
 URL
