@@ -2,8 +2,6 @@ services:
   web:
     build:
       context: ./django-app/
-    # command: python manage.py runserver 0.0.0.0:8000
-    # command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django-app:/usr/scr/app/
       - static_files:/usr/src/app/staticfiles
@@ -37,18 +35,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
-  # dns:
-  #   build:
-  #     context: ./dns/
-  #   restart: always
-  #   ports:
-  #     - 53:53
-  #     - 53:53/udp
-  #   volumes:
-  #     - ./dns/named.conf:/etc/bind/named.conf
-  #     - ./dns/zone/:/etc/bind/zone/
-  #   command: named -c /etc/bind/named.conf -g -u named
 
 volumes:
   static_files:
