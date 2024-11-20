@@ -16,10 +16,10 @@ nginx -s reload
 
 # Run development
 
-docker-compose -f docker-compose.yml up --build
+docker-compose -f docker-compose.yml up --build --remove-orphans
 
 # Run production
 
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f docker-compose.prod.yml up --build --remove-orphans
 
 ```
